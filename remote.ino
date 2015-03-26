@@ -1,36 +1,37 @@
-//repeat 0xFFFFFFFF
 
-#define LG_UP 0x20DF02FD
-#define LG_DW 0x20DF827D
-#define LG_INFO 0x20DF55AA
-#define LG_SMPLINK 0x20DF7E81
-
-//enter some kind of menu
-#define LG_MENU 0x20DFC23D
-#define LG_QMENU 0x20DFA25D
-#define LG_GUIDE 0x20DFD52A
-#define LG_FAV 0x20DF7887
-#define LG_ENTER 0x20DF22DD
-
-#define LG_RETURN 0x20DF14EB
-#define LG_POWER 0x20DF10EF
-
-#define LG_LEFT 0x20DFE01F
-#define LG_RIGHT 0x20DF609F
-
-
-
-//AIWA RC-EX08
-//NEC
-#define AIWA_1 0xE078FC8
-#define AIWA_2 0xE078FE8
-#define AIWA_3 0xE078FF8
-#define AIWA_4 0xE078FD8
-#define AIWA_5 0xE078FD2
-#define AIWA_6 0xE078FE2
+//LG Remote (NEC)
+enum LgRemote {
+    LG_UP = 0x20DF02FD,
+    LG_DW = 0x20DF827D,
+    LG_INFO = 0x20DF55AA,
+    LG_SMPLINK = 0x20DF7E81,
+    
+    //enter some kind of menu
+    LG_MENU = 0x20DFC23D,
+    LG_QMENU = 0x20DFA25D,
+    LG_GUIDE = 0x20DFD52A,
+    LG_FAV = 0x20DF7887,
+    LG_ENTER = 0x20DF22DD,
+  
+    LG_RETURN = 0x20DF14EB,
+    LG_POWER = 0x20DF10EF,
+   
+    LG_LEFT = 0x20DFE01F,
+    LG_RIGHT = 0x20DF609F,
+};
 
 
+//AIWA RC-EX08 (NEC)
+enum AiwaRemote {
+    AIWA_1 = 0xE078FC8,
+    AIWA_2 = 0xE078FE8,
+    AIWA_3 = 0xE078FF8,
+    AIWA_4 = 0xE078FD8,
+    AIWA_5 = 0xE078FD2,
+    AIWA_6 = 0xE078FE2,
+};
 
+const int RepeatTimeout = 300; //ms
 
 /** The UP and DOWN arrows are used to control the volume, but when the menu key is pressed,
     these keys are used to navigate the menu, this namespace is used to handle when a menu key is pressed
@@ -96,6 +97,7 @@ namespace lgMenu{
 
 
 
+/** This function is called on every loop and handles and dispatch everything related to IR events */
 byte processRemote(){
 
     static byte lastCommand;
@@ -143,7 +145,7 @@ byte processRemote(){
             break;
 
             case REPEAT:
-                if(currentMillisR - previousMillisR < 300){
+                if(currentMillisR - previousMillisR < RepeatTimeout){
                     if(lastCommand == CMD_VOLUP || lastCommand == CMD_VOLDW){
                         command = lastCommand;
                     }
