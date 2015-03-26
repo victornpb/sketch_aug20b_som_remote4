@@ -63,7 +63,7 @@ namespace lgMenu{
       }
   }
 
-  byte processKey(unsigned long value, long currentMillis){
+  void processKey(unsigned long value, long currentMillis){
         
         //when these keys are pressed, they enter in some menu
         if(value == LG_MENU || value == LG_QMENU || value == LG_GUIDE || value == LG_FAV ){
@@ -147,12 +147,6 @@ byte processRemote(){
                     if(lastCommand == CMD_VOLUP || lastCommand == CMD_VOLDW){
                         command = lastCommand;
                     }
-                    else{
-                        command = CMD_NONE;
-                    }
-                }
-                else{
-                    command = CMD_NONE;
                 }
             break;
 

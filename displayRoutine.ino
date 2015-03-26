@@ -1,7 +1,7 @@
 /** Led 13 blink on known command received */
 namespace ledBlink{
   
-  const unsigned int duration = 250;
+  const unsigned int duration = 250; //hold for x ms
   
   bool enabled;
   static long ledBlinkTimeout;
